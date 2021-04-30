@@ -4,21 +4,23 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-const { connection } = require('./database');
+const path = require('path');
+const { connection } = require('../database');
 
 const app = express();
 
+app.use(express.json());
+
 // Routes
-app.get('/', (req, res) => {
-  res.send('Hello Word');
-});
+app.get('/', (req, res) => res.sendFile(path.resolve('./resources/views/index.html')));
+app.use('/api', require('../routes/api'));
 
 app.listen(8000, () => {
   console.log('Server on port 8000');
+  console.log(process.env.DB_USERNAME)
 
   connection.sync().then(() => {
     console.log('Tablas sincronizadas')
   });
 });
 
-console.log(process.env.DB_USERNAME)
