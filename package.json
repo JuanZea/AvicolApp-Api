@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon"
+    "dev": "nodemon app/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,13 +25,13 @@
   },
   "homepage": "https://github.com/JuanZea/AvicolApp-Backend#readme",
   "dependencies": {
-    "db": "^3.3.1",
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.2"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "sequelize-cli": "^6.2.0"
   }
 }
