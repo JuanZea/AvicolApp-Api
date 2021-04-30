@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production'){
 
 const express = require('express');
 const app = express();
-const sequelize = require('./database/db.js');
+const { sequelize } = require('./database/db');
 
 // Routes
 app.get('/', (req, res) => {
@@ -16,9 +16,11 @@ app.listen(8000, () => {
   console.log('Server on port 8000')
 
   // Connect with database
-  /*sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
-  }).catch(error => {
+  try {
+    sequelize.authenticate().then(() => {
+      console.log('Connection has been established successfully.');
+    });
+  } catch (error) {
     console.error('Unable to connect to the database:', error);
-  })*/
+  }
 });

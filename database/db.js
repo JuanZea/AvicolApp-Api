@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
   database.password,
   {
     host: database.host,
+    port: database.port,
     dialect: database.dialect,
   }
 );
@@ -20,14 +21,8 @@ const Settlement = SettlementModel(sequelize, Sequelize);
 const Barn = BarnModel(sequelize, Sequelize);
 const Lot = LotModel(sequelize, Sequelize);
 
-sequelize.sync({force: true})
-    .then(() => {
-        console.log('Tablas sincronizadas')
-    })
+sequelize.sync().then(() => {
+  console.log('Tablas sincronizadas')
+});
 
-module.exports = sequelize;
-module.exports = Settlement;
-module.exports = Barn;
-module.exports = Lot;
-
-
+module.exports = { sequelize, Settlement, Barn, Lot };
