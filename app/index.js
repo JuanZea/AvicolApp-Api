@@ -20,7 +20,7 @@ app.listen(8000, () => {
   console.log(process.env.DB_USERNAME)
 
   connection.sync().then(() => {
-    console.log('Tablas sincronizadas')
+    console.log('Synchronized models')
   });
 });
 
