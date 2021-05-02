@@ -17,7 +17,6 @@ app.use('/api', require('../routes/api'));
 
 app.listen(8000, () => {
   console.log('Server on port 8000');
-  console.log(process.env.DB_USERNAME)
 
   connection.sync().then(() => {
     console.log('Synchronized models')
