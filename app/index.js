@@ -18,8 +18,8 @@ app.use('/api', require('../routes/api'));
 app.listen(8000, () => {
   console.log('Server on port 8000');
 
-  connection.sync().then(() => {
-    console.log('Synchronized models')
+  connection.sync({force: true}).then(() => {
+    console.log('Synchronized models');
   });
 });
 
