@@ -4,8 +4,11 @@ module.exports = {
   async index(req, res) {
     let lots = await Lot.findAll();
 
-    console.log(lots)
+    let response = {
+      status: 200,
+      data: lots,
+    }
 
-    res.json(lots);
+    res.json(response);
   }
 }

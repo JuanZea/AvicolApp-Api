@@ -4,8 +4,11 @@ module.exports = {
   async index(req, res) {
     let barns = await Barn.findAll();
 
-    console.log(barns)
+    let response = {
+      status: 200,
+      data: barns,
+    }
 
-    res.json(barns);
+    res.json(response);
   }
 }
