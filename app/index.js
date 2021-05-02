@@ -8,7 +8,7 @@ const path = require('path');
 const { connection } = require('../database');
 
 const app = express();
-
+app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 
 // Routes

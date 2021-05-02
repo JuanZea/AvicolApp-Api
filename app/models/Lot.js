@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Lot.init({
-    name: DataTypes.STRING,
     age: DataTypes.INTEGER,
     hens_number: DataTypes.INTEGER,
     vaccines: DataTypes.JSON
