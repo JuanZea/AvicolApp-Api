@@ -5,11 +5,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 const path = require('path');
 const morgan = require('morgan');
+const cors = require('cors')
 const express = require('express');
 const { connection } = require('../database');
 
 const app = express();
-
+app.use(cors());
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(morgan('dev'));

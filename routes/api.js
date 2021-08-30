@@ -1,13 +1,14 @@
 const router = require('express').Router();
 
 // Controllers
+const UserController = require('../app/controllers/UserController');
 const SettlementController = require('../app/controllers/SettlementController');
 const BarnController = require('../app/controllers/BarnController');
 const LotController = require('../app/controllers/LotController');
 
-
-// Welcome
-router.get('/', (req, res) => res.json({ foo: "bar" }));
+// Users
+router.get('/users', UserController.index);
+router.post('/users', UserController.store);
 
 // Settlements
 router.get('/settlements', SettlementController.index);

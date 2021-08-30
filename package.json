@@ -1,31 +1,22 @@
 {
-  "name": "AvicolApp-Backend",
+  "name": "AvicolApp-Api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "nodemon app/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JuanZea/AvicolApp-Backend.git"
-  },
-  "keywords": [],
   "contributors": [
     "Alejandro Yarce",
-    "Andres Guerra",
     "Daniela Vasquez",
     "Gerardo Castillo",
     "Jose Ortiz",
-    "Juan Zea"
+    "Juan Zea",
+    "Valeria Granada"
   ],
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JuanZea/AvicolApp-Backend/issues"
-  },
-  "homepage": "https://github.com/JuanZea/AvicolApp-Backend#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "firebase": "^9.0.0",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.2"
   },
