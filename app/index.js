@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const path = require('path');
 const morgan = require('morgan');
-const cors = require('cors')
+const cors = require('cors');
 const express = require('express');
 const { connection } = require('../database');
 
