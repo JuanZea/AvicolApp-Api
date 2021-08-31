@@ -14,15 +14,13 @@ module.exports = {
   },
 
   async store(req, res) {
-    console.log(req.body)
-    let user = await User.create({firebase_id: req.body.firebaseId});
+    let user = await User.create({
+      id: req.body.id,
+      name: req.body.name,
+      email: req.body.email
+    });
 
-
-    let response = {
-      status: 201,
-      data: user,
-    }
-
+    let response = {status: 201, data: user}
     res.status(201).json(response);
   },
 }
