@@ -10,6 +10,7 @@ const LotController = require('../app/controllers/LotController');
 router.get('/users', UserController.index);
 router.post('/users', UserController.store);
 router.patch('/users/:id', UserController.update);
+router.get('/users/:id', UserController.one);
 
 // Settlements
 router.get('/settlements', SettlementController.index);

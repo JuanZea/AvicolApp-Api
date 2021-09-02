@@ -23,15 +23,31 @@ module.exports = {
 
 
   async update(req, res) {
-    console.log('req.body');
-    const rows = await User.update(req.body, {
+      await User.update(req.body, {
       where: {
         id: req.params.id
       }
     });
 
-    let response = {status: 201, message: `el número de datos afectados es: ${rows}`}
+
+    let response = {status: 201}
     res.status(201).json(response);
+  },
+
+  async one(req, res) {
+    console.log(req.body)
+    let user = await User.findAll({
+      where: {
+        id: req.params.id
+      }
+    });
+
+    let response = {
+      status: 200,
+      data: user,
+    }
+
+    res.json(response);
   },
 
 }
