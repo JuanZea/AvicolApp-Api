@@ -9,7 +9,7 @@ const LotController = require('../app/controllers/LotController');
 // Users
 router.get('/users', UserController.index);
 router.post('/users', UserController.store);
-router.patch('/users', UserController.update);
+router.patch('/users/:id', UserController.update);
 
 // Settlements
 router.get('/settlements', SettlementController.index);

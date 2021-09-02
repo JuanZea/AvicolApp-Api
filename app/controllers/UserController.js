@@ -14,11 +14,7 @@ module.exports = {
   },
 
   async store(req, res) {
-    let user = await User.create({
-      id: req.body.id,
-      name: req.body.name,
-      email: req.body.email
-    });
+    let user = await User.create(req.body);
 
 
     let response = {status: 201, data: user}
@@ -27,18 +23,15 @@ module.exports = {
 
 
   async update(req, res) {
-    let user = await User.find(req.body.id, {
-      name: req.body.name,
-      document: req.body.document,
-      mobile: req.body.mobile,
-      address: req.body.address
-    })
+    console.log('req.body');
+    const rows = await User.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    });
 
-
-    let response = {status: 201, data: user}
+    let response = {status: 201, message: `el número de datos afectados es: ${rows}`}
     res.status(201).json(response);
   },
-
-
 
 }
