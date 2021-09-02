@@ -20,7 +20,25 @@ module.exports = {
       email: req.body.email
     });
 
+
     let response = {status: 201, data: user}
     res.status(201).json(response);
   },
+
+
+  async update(req, res) {
+    let user = await User.find(req.body.id, {
+      name: req.body.name,
+      document: req.body.document,
+      mobile: req.body.mobile,
+      address: req.body.address
+    })
+
+
+    let response = {status: 201, data: user}
+    res.status(201).json(response);
+  },
+
+
+
 }
