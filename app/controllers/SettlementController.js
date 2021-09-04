@@ -29,4 +29,12 @@ module.exports = {
     res.status(201).json(response);
   },
 
+  async show(req, res) {
+    let settlement = await Settlement.findOne(req.body.id);
+    let response = {
+      status: 200,
+      data: settlement,
+    }
+    res.json(response);
+  }
 }
