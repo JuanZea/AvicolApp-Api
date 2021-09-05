@@ -15,7 +15,8 @@ router.get('/users/:id', UserController.one);
 
 // Settlements
 router.get('/settlements', SettlementController.index);
-
+router.get('/settlements/first', SettlementController.first);
+router.get('/settlements/:id', SettlementController.show);
 router.post('/settlements', ...SettlementRequest.store, SettlementController.store);
 
 // Barns

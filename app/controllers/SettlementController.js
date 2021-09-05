@@ -3,7 +3,7 @@ const {validationResult} = require('express-validator');
 
 module.exports = {
     async index(req, res) {
-        const settlements = await Settlement.findAll();
+        const settlements = await Settlement.findAll({where: {user_id: req.headers.auth}});
 
         const response = {
             status: 200,
@@ -28,5 +28,27 @@ module.exports = {
         }
 
         res.status(201).json(response);
+    },
+
+    async first(req, res) {
+        const settlement = await Settlement.findOne({where: {user_id: req.headers.auth}});
+
+        const response = {
+            status: 200,
+            data: settlement,
+        }
+
+        res.status(200).json(response);
+    },
+
+    async show(req, res) {
+        const settlement = await Settlement.findOne({where: {user_id: req.headers.auth, id: req.params.id}});
+
+        const response = {
+            status: 200,
+            data: settlement,
+        }
+
+        res.status(200).json(response);
     }
 }
