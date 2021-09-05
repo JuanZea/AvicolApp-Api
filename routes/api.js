@@ -5,6 +5,7 @@ const UserController = require('../app/controllers/UserController');
 const SettlementController = require('../app/controllers/SettlementController');
 const BarnController = require('../app/controllers/BarnController');
 const LotController = require('../app/controllers/LotController');
+const SettlementRequest = require("../app/requests/SettlementRequest");
 
 // Users
 router.get('/users', UserController.index);
@@ -15,7 +16,7 @@ router.get('/users/:id', UserController.one);
 // Settlements
 router.get('/settlements', SettlementController.index);
 
-router.post('/settlements', SettlementController.store);
+router.post('/settlements', SettlementRequest.store, SettlementController.store);
 
 // Barns
 router.get('/barns', BarnController.index);

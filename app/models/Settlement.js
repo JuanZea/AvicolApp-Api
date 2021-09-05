@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Settlement.init({
+    user_id: DataTypes.STRING,
     name: DataTypes.STRING,
     location: DataTypes.STRING,
     address: DataTypes.STRING,
