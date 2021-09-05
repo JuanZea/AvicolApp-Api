@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
+  }
+
   Settlement.init({
     user_id: DataTypes.STRING,
     name: DataTypes.STRING,

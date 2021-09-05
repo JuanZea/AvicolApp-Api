@@ -2,11 +2,10 @@ const {Settlement} = require('../../database');
 const {validationResult} = require('express-validator');
 
 module.exports = {
-
     async index(req, res) {
-        let settlements = await Settlement.findAll();
+        const settlements = await Settlement.findAll();
 
-        let response = {
+        const response = {
             status: 200,
             data: settlements,
         }
@@ -21,20 +20,13 @@ module.exports = {
             return;
         }
 
-        let settlement = await Settlement.create({
-            name: req.body.name,
-            location: req.body.location,
-            address: req.body.address,
-            sea_level: req.body.sea_level,
-            user_id: req.body.user_id,
-        });
+        const settlement = await Settlement.create(req.body);
 
-        let response = {
+        const response = {
             status: 201,
             data: settlement,
         }
 
         res.status(201).json(response);
-    },
-
+    }
 }
