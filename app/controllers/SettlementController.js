@@ -31,12 +31,14 @@ module.exports = {
     },
 
     async first(req, res) {
-        const settlement = await Settlement.findOne({where: {user_id: req.headers.auth}});
+        const settlement = await Settlement.findOne({where: {id: req.params.id}});
 
         const response = {
             status: 200,
             data: settlement,
         }
+
+        console.log(response)
 
         res.status(200).json(response);
     },
@@ -47,6 +49,16 @@ module.exports = {
         const response = {
             status: 200,
             data: settlement,
+        }
+
+        res.status(200).json(response);
+    },
+
+    async delete(req, res) {
+        await Settlement.destroy({where: {id: req.params.id}});
+
+        const response = {
+            status: 200
         }
 
         res.status(200).json(response);
