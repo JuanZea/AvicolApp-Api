@@ -3,7 +3,7 @@ const {validationResult} = require('express-validator');
 
 module.exports = {
     async index(req, res) {
-        const settlements = await Settlement.findAll({where: {user_id: req.headers.auth}});
+        const settlements = await Settlement.findAll({where: {user_id: req.headers.user_id}});
 
         const response = {
             status: 200,
@@ -31,27 +31,31 @@ module.exports = {
     },
 
     async first(req, res) {
-        const settlement = await Settlement.findOne({where: {id: req.params.id}});
+        const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id}});
+        const response = {}
 
-        const response = {
-            status: 200,
-            data: settlement,
+        if (settlement) {
+            response.status = 200;
+            response.data = settlement;
+            res.status(200).json(response);
+        } else {
+            response.status = 404;
+            res.status(404).json(response);
         }
-
-        console.log(response)
-
-        res.status(200).json(response);
     },
 
     async show(req, res) {
-        const settlement = await Settlement.findOne({where: {user_id: req.headers.auth, id: req.params.id}});
+        const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id, id: req.params.id}});
+        const response = {}
 
-        const response = {
-            status: 200,
-            data: settlement,
+        if (settlement) {
+            response.status = 200;
+            response.data = settlement;
+            res.status(200).json(response);
+        } else {
+            response.status = 404;
+            res.status(404).json(response);
         }
-
-        res.status(200).json(response);
     },
 
     async delete(req, res) {
