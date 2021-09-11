@@ -1,13 +1,13 @@
-const { Barn } = require('../../database');
+const { Barn, Settlement} = require('../../database');
 
 module.exports = {
 
   async index(req, res) {
-    let barns = await Barn.findAll();
+    const settlements = await Settlement.findAll({where: {user_id: req.headers.user_id}});
 
-    let response = {
+    const response = {
       status: 200,
-      data: barns,
+      data: settlements,
     }
 
     res.json(response);
