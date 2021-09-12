@@ -28,4 +28,40 @@ module.exports = {
     res.status(201).json(response);
   },
 
+  async show(req, res) {
+    const barn = await Barn.findOne({where: {id: req.params.id}});
+    const response = {}
+
+    if (barn) {
+      response.status = 200;
+      response.data = barn;
+      res.status(200).json(response);
+    } else {
+      response.status = 404;
+      res.status(404).json(response);
+    }
+  },
+
+  async update(req, res) {
+    await Barn.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    });
+
+
+    let response = {status: 201}
+    res.status(201).json(response);
+  },
+
+  async delete(req, res) {
+    await Barn.destroy({where: {id: req.params.id}});
+
+    const response = {
+      status: 200
+    }
+
+    res.status(200).json(response);
+  }
+
 }

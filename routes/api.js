@@ -24,6 +24,9 @@ router.delete('/settlements/:id', SettlementController.delete);
 router.get('/barns', BarnController.index);
 
 router.post('/barns', BarnController.store);
+router.delete('/barns/:id', BarnController.delete);
+router.patch('/barns/:id', BarnController.update);
+router.get('/barns/:id', BarnController.show);
 
 // Lots
 router.get('/lots', LotController.index);
