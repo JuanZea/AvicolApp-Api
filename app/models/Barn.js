@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Barn.init({
+    settlement_id: DataTypes.STRING,
     name: DataTypes.STRING,
     type: DataTypes.STRING,
     lots_number: DataTypes.INTEGER

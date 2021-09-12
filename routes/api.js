@@ -1,17 +1,10 @@
 const router = require('express').Router();
 
 // Controllers
-const UserController = require('../app/controllers/UserController');
 const SettlementController = require('../app/controllers/SettlementController');
 const BarnController = require('../app/controllers/BarnController');
 const LotController = require('../app/controllers/LotController');
 const SettlementRequest = require("../app/requests/SettlementRequest");
-
-// Users
-router.get('/users', UserController.index);
-router.post('/users', UserController.store);
-router.patch('/users/:id', UserController.update);
-router.get('/users/:id', UserController.one);
 
 // Settlements
 router.get('/settlements', SettlementController.index);
