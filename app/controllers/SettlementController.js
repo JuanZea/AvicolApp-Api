@@ -32,16 +32,8 @@ module.exports = {
 
     async first(req, res) {
         const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id}});
-        const response = {}
-
-        if (settlement) {
-            response.status = 200;
-            response.data = settlement;
-            res.status(200).json(response);
-        } else {
-            response.status = 404;
-            res.status(404).json(response);
-        }
+        const response = {status: settlement ? 200 : 404, data: settlement};
+        res.status(response.status).json(response);
     },
 
     async show(req, res) {
