@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const express = require('express');
 const { connection } = require('../database');
+require("../database/associations");
 
 const app = express();
 app.use(cors());
@@ -26,5 +27,9 @@ app.listen(8000, () => {
   connection.authenticate().then(() => {
     console.log('Database connection established.');
   });
+
+  // connection.sync({force: true}).then(() => {
+  //   console.log('Database connection established.');
+  // });
 });
 

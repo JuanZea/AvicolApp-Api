@@ -20,7 +20,7 @@ module.exports = {
             return;
         }
 
-        const settlement = await Settlement.create(req.body);
+        const settlement = await Settlement.create({user_id: req.headers.user_id, ...req.body});
 
         const response = {
             status: 201,

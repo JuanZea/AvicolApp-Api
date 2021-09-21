@@ -1,37 +1,208 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+    up: async (queryInterface, Sequelize) => {
 
-    let barns = [
-      {
-        name: 'Galpon 1',
-        type: 'Galpon',
-        lots_number: 4,
-        created_at: '2021-05-02 00:09:50',
-        updated_at: '2021-05-02 00:09:50',
-      },
-      {
-        name: 'Granero',
-        type: 'Cautividad',
-        lots_number: 8,
-        created_at: '2021-05-02 00:09:50',
-        updated_at: '2021-05-02 00:09:50',
-      },
-      {
-        name: 'Galpon 2',
-        type: 'Galpon',
-        lots_number: 2,
-        created_at: '2021-05-02 00:09:50',
-        updated_at: '2021-05-02 00:09:50',
-      },
-    ];
+        let barns = [
+            {
+                name: 'Galpon 1',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 4,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Granero',
+                type: 'Cautividad',
+                settlement_id: 1,
+                lots_number: 8,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 2',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 3',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 4',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 5',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 6',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 7',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 8',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 9',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 2222',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 222',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 2111',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 211',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 20',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 29',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 28',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 27',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 26',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 25',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 24',
+                type: 'Galpon',
+                settlement_id: 1,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 4',
+                type: 'Galpon',
+                settlement_id: 2,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 1',
+                type: 'Galpon',
+                settlement_id: 2,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+            {
+                name: 'Galpon 2',
+                type: 'Galpon',
+                settlement_id: 2,
+                lots_number: 2,
+                created_at: '2021-05-02 00:09:50',
+                updated_at: '2021-05-02 00:09:50',
+            },
+        ];
 
-    await queryInterface.bulkInsert('Barns', barns, {});
+        await queryInterface.bulkInsert('Barns', barns, {});
 
-  },
+    },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Barns', null, {});
-  }
+    down: async (queryInterface, Sequelize) => {
+        await queryInterface.bulkDelete('Barns', null, {});
+    }
 };

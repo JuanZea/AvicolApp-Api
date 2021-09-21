@@ -1,16 +1,17 @@
-const { Barn} = require('../../database');
+const { Settlement, Barn } = require('../../database');
 
 module.exports = {
 
   async index(req, res) {
-    const barns = await Barn.findAll({where: {settlement_id: req.headers.settlement_id}});
+    const response = {status: 200};
+    let barns = null;
 
-    const response = {
-      status: 200,
-      data: barns,
-    }
+    const settlement = await Settlement.findOne({where: {id: req.headers.settlement_id, user_id: req.headers.user_id}, include: [{ model: Barn }]});
+    if (settlement) barns = settlement.Barns;
 
-    res.json(response);
+    response.data = barns;
+
+    res.status(response.status).json(response);
   },
 
   async store(req, res) {
