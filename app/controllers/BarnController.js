@@ -1,32 +1,37 @@
 const { Settlement, Barn } = require('../../database');
+const {validationResult} = require("express-validator");
 
 module.exports = {
 
   async index(req, res) {
-    const response = {status: 200};
-    let barns = null;
 
-    const settlement = await Settlement.findOne({where: {id: req.headers.settlement_id, user_id: req.headers.user_id}, include: [{ model: Barn }]});
-    if (settlement) barns = settlement.Barns;
+    const response = { status: 200 };
+    const settlement = await Settlement.findOne({where: {id: req.headers.settlement_id}, include: [{ model: Barn }]});
 
-    response.data = barns;
+    if (!settlement) {
+      response.message = "Settlement not found";
+      response.status = 404;
+    } else if (settlement.user_id.toString() !== req.headers.user_id) {
+      response.message = "The settlement belongs to another user";
+      response.status = 401;
+    } else {
+      response.data = settlement.Barns;
+    }
 
     res.status(response.status).json(response);
+
   },
 
   async store(req, res) {
-    let barn = await Barn.create({
-      name: req.body.name,
-      type: req.body.type,
-      lots_number: req.body.lots_number,
-    });
 
-    let response = {
-      status: 201,
-      data: barn,
-    }
+    const response = { status: 201 };
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) res.status(422).json({errors: errors});
+
+    response.data = await Barn.create({settlement_id: req.headers.settlement_id, ...req.body});
 
     res.status(201).json(response);
+
   },
 
   async show(req, res) {

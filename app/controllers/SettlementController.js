@@ -1,62 +1,85 @@
-const {Settlement} = require('../../database');
-const {validationResult} = require('express-validator');
+const { Settlement } = require('../../database');
+const { validationResult } = require('express-validator');
 
 module.exports = {
+
     async index(req, res) {
-        const settlements = await Settlement.findAll({where: {user_id: req.headers.user_id}});
 
-        const response = {
-            status: 200,
-            data: settlements,
-        }
+        const response = { status: 200 };
+        response.data = await Settlement.findAll({where: {user_id: req.headers.user_id}});
+        res.status(response.status).json(response);
 
-        res.json(response);
-    },
-
-    async store(req, res) {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            res.status(422).json({errors: errors});
-            return;
-        }
-
-        const settlement = await Settlement.create({user_id: req.headers.user_id, ...req.body});
-
-        const response = {
-            status: 201,
-            data: settlement,
-        }
-
-        res.status(201).json(response);
     },
 
     async first(req, res) {
-        const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id}});
-        const response = {status: settlement ? 200 : 404, data: settlement};
+
+        const settlement = await Settlement.findByPk(req.headers.user_id);
+        const response = { status: settlement ? 200 : 404, data: settlement };
         res.status(response.status).json(response);
+
+    },
+
+    async store(req, res) {
+
+        const response = { status: 201 };
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) res.status(422).json({errors: errors});
+
+        response.data = await Settlement.create({user_id: req.headers.user_id, ...req.body});
+        res.status(201).json(response);
+
     },
 
     async show(req, res) {
-        const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id, id: req.params.id}});
-        const response = {}
 
-        if (settlement) {
-            response.status = 200;
-            response.data = settlement;
-            res.status(200).json(response);
-        } else {
+        const settlement = await Settlement.findByPk(req.params.id);
+        const response = { status: 200 }
+
+        if (!settlement) {
             response.status = 404;
-            res.status(404).json(response);
+            response.data = settlement;
+        } else if (settlement.user_id.toString() !== req.headers.user_id) {
+            response.message = "The settlement belongs to another user";
+            response.status = 401;
+        } else {
+            response.data = settlement;
         }
+
+        res.status(response.status).json(response);
+
+    },
+
+    async update(req, res) {
+
+        const response = { status: 201 };
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) res.status(422).json({errors: errors});
+
+        const settlement = await Settlement.findByPk(req.params.id);
+
+        if (!settlement) {
+            response.status = 404;
+            response.data = settlement;
+        } else if (settlement.user_id.toString() !== req.headers.user_id) {
+            response.message = "The settlement belongs to another user";
+            response.status = 401;
+        } else {
+            response.data = await settlement.update(req.body);
+        }
+
+        res.status(201).json(response);
+
     },
 
     async delete(req, res) {
-        await Settlement.destroy({where: {id: req.params.id}});
 
-        const response = {
-            status: 200
-        }
-
+        const response = { status: 200 }
+        if (await Settlement.destroy({where: {user_id: req.headers.user_id, id: req.params.id}}))
+            response.message = "Settlement deleted successfully";
+        else
+            response.message = "Delete settlement failed"
         res.status(200).json(response);
+
     }
+
 }
