@@ -13,7 +13,7 @@ module.exports = {
 
     async first(req, res) {
 
-        const settlement = await Settlement.findByPk(req.headers.user_id);
+        const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id}});
         const response = { status: settlement ? 200 : 404, data: settlement };
         res.status(response.status).json(response);
 
