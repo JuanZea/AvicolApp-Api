@@ -33,11 +33,11 @@ module.exports = {
     async show(req, res) {
 
         const settlement = await Settlement.findByPk(req.params.id);
-        const response = { status: 200 }
+        const response = { status: 200, data: null }
 
         if (!settlement) {
             response.status = 404;
-            response.data = settlement;
+            response.message = "Settlement not found";
         } else if (settlement.user_id.toString() !== req.headers.user_id) {
             response.message = "The settlement belongs to another user";
             response.status = 401;
@@ -74,11 +74,20 @@ module.exports = {
     async delete(req, res) {
 
         const response = { status: 200 }
-        if (await Settlement.destroy({where: {user_id: req.headers.user_id, id: req.params.id}}))
-            response.message = "Settlement deleted successfully";
-        else
-            response.message = "Delete settlement failed"
-        res.status(200).json(response);
+        const settlement = await Settlement.findByPk(req.params.id);
+
+        if (settlement.user_id !== req.headers.user_id) {
+            response.status = 401;
+            response.message = "The settlement belongs to another user";
+        } else {
+            if (await settlement.destroy()) response.message = "Settlement deleted successfully";
+            else {
+                response.status = 400;
+                response.message = "Delete settlement failed";
+            }
+        }
+
+        res.status(response.status).json(response);
 
     }
 

@@ -1,5 +1,5 @@
 const { Settlement, Barn } = require('../../database');
-const {validationResult} = require("express-validator");
+const { validationResult } = require("express-validator");
 
 module.exports = {
 
@@ -36,38 +36,74 @@ module.exports = {
 
   async show(req, res) {
     const barn = await Barn.findOne({where: {id: req.params.id}});
-    const response = {}
+    const response = {status: 200, data: null}
 
-    if (barn) {
-      response.status = 200;
-      response.data = barn;
-      res.status(200).json(response);
-    } else {
+    if (!barn) {
       response.status = 404;
-      res.status(404).json(response);
+      response.message = "Barn not found";
+    } else {
+      const settlement = await barn.getSettlement();
+      if (settlement.user_id.toString() === req.headers.user_id) {
+        response.data = barn;
+      } else {
+        response.status = 401;
+        response.message = "The barn belongs to a settlement of another user";
+      }
     }
+
+    res.status(response.status).json(response);
+
   },
 
   async update(req, res) {
-    await Barn.update(req.body, {
-      where: {
-        id: req.params.id
+
+    const response = { status: 201, data: null };
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) res.status(422).json({errors: errors});
+
+    const barn = await Barn.findByPk(req.params.id);
+
+    if (!barn) {
+      response.status = 404;
+      response.message = "Barn not found";
+    } else {
+      const settlement = await barn.getSettlement();
+      if (settlement.user_id.toString() === req.headers.user_id) {
+        response.data = await barn.update(req.body);
+      } else {
+        response.status = 401;
+        response.message = "The barn belongs to a settlement of another user";
       }
-    });
+    }
 
+    res.status(response.status).json(response);
 
-    let response = {status: 201}
-    res.status(201).json(response);
   },
 
   async delete(req, res) {
-    await Barn.destroy({where: {id: req.params.id}});
 
-    const response = {
-      status: 200
+    const barn = await Barn.findOne({where: {id: req.params.id}});
+    const response = {status: 200, data: null}
+
+    if (!barn) {
+      response.status = 404;
+      response.message = "Barn not found";
+    } else {
+      const settlement = await barn.getSettlement();
+      if (settlement.user_id.toString() !== req.headers.user_id) {
+        response.status = 401;
+        response.message = "The barn belongs to a settlement of another user";
+      } else {
+        if (await barn.destroy()) response.message = "Barn deleted successfully";
+            else {
+                response.status = 400;
+                response.message = "Delete barn failed";
+            }
+      }
     }
 
-    res.status(200).json(response);
+    res.status(response.status).json(response);
+
   }
 
 }

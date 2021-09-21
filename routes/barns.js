@@ -10,7 +10,7 @@ router.use(middlewares.settlementsIdChecker);
 router.get('/', BarnController.index);
 router.post('/', ...BarnRequest.store, BarnController.store);
 router.get('/:id', BarnController.show);
-router.patch('/:id', BarnController.update);
+router.patch('/:id', ...BarnRequest.store, BarnController.update);
 router.delete('/:id', BarnController.delete);
 
 module.exports = router;
