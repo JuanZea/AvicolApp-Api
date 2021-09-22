@@ -9,6 +9,7 @@ module.exports = {
         const response = { status: 200 };
         response.data = await Settlement.findAll({
             include: [{ model: Barn, attributes: [] }],
+            group: 'settlement.id',
             where: {user_id: req.headers.user_id},
             attributes: [
                 'id', 'user_id', 'name', 'location', 'address', 'sea_level', 'created_at',
@@ -21,6 +22,26 @@ module.exports = {
 
     async first(req, res) {
 
+        // TODO Send barns_number for first
+        // const response = { status: 200 };
+        //
+        // const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id},
+        //     group: 'settlement.id',
+        //     include: [{ model: Barn, attributes: [] }],
+        //     attributes: [
+        //         'id', 'user_id', 'name', 'location', 'address', 'sea_level', 'created_at',
+        //         [sequelize.fn('count', sequelize.col('barns.id')) ,'barns_number']
+        //     ]
+        // });
+        //
+        //  if (!settlement) {
+        //     response.status = 404;
+        //     response.message = "There are no settlements";
+        // } else {
+        //     response.data = settlement;
+        // }
+        // res.status(response.status).json(response);
+
         const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id}});
         const response = { status: settlement ? 200 : 404, data: settlement };
         res.status(response.status).json(response);
@@ -31,7 +52,10 @@ module.exports = {
 
         const response = { status: 201 };
         const errors = validationResult(req);
-        if (!errors.isEmpty()) res.status(422).json({errors: errors});
+        if (!errors.isEmpty()) {
+            res.status(422).json({errors: errors});
+            return;
+        }
 
         response.data = await Settlement.create({user_id: req.headers.user_id, ...req.body});
         res.status(201).json(response);
@@ -40,7 +64,15 @@ module.exports = {
 
     async show(req, res) {
 
-        const settlement = await Settlement.findByPk(req.params.id);
+        const settlement = await Settlement.findOne({where: {id: req.params.id},
+            group: 'settlement.id',
+            include: [{ model: Barn, attributes: [] }],
+            attributes: [
+              'id', 'user_id', 'name', 'location', 'address', 'sea_level', 'created_at',
+              [sequelize.fn('count', sequelize.col('barns.id')) ,'barns_number']
+            ]
+        });
+
         const response = { status: 200, data: null }
 
         if (!settlement) {

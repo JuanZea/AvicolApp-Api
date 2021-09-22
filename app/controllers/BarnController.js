@@ -34,7 +34,10 @@ module.exports = {
 
     const response = { status: 201 };
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(422).json({errors: errors});
+    if (!errors.isEmpty()) {
+      res.status(422).json({errors: errors});
+      return;
+    }
 
     if (await Settlement.findByPk(req.headers.settlement_id))
       response.data = await Barn.create({settlement_id: req.headers.settlement_id, ...req.body});
@@ -43,19 +46,23 @@ module.exports = {
       response.message = "Settlement not found";
     }
 
-    res.status(201).json(response);
+    res.status(response.status).json(response);
 
   },
 
   async show(req, res) {
+
     const barn = await Barn.findOne({where: {id: req.params.id},
+        group: 'barn.id',
         include: [{ model: Lot, attributes: [] }],
         attributes: [
           'id', 'settlement_id', 'name', 'type', 'created_at',
           [sequelize.fn('count', sequelize.col('lots.id')) ,'lots_number']
-        ],});
-    const response = {status: 200, data: null}
+        ]
+    });
 
+    const response = {status: 200, data: null}
+    
     if (!barn) {
       response.status = 404;
       response.message = "Barn not found";
