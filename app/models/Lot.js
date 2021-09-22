@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Lot.init({
+    barn_id: DataTypes.INTEGER,
     age: DataTypes.INTEGER,
     hens_number: DataTypes.INTEGER,
     vaccines: DataTypes.JSON

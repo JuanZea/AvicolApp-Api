@@ -1,12 +1,20 @@
-const { Settlement } = require('../../database');
+const { Settlement, Barn } = require('../../database');
 const { validationResult } = require('express-validator');
+const sequelize = require("sequelize");
 
 module.exports = {
 
     async index(req, res) {
 
         const response = { status: 200 };
-        response.data = await Settlement.findAll({where: {user_id: req.headers.user_id}});
+        response.data = await Settlement.findAll({
+            include: [{ model: Barn, attributes: [] }],
+            where: {user_id: req.headers.user_id},
+            attributes: [
+                'id', 'user_id', 'name', 'location', 'address', 'sea_level', 'created_at',
+                [sequelize.fn('count', sequelize.col('barns.id')) ,'barns_number']
+            ],
+        });
         res.status(response.status).json(response);
 
     },

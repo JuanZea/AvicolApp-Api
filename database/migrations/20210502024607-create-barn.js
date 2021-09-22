@@ -18,9 +18,6 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
-      lots_number: {
-        type: Sequelize.INTEGER
-      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

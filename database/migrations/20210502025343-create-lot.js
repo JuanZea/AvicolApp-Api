@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      barn_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       age: {
         type: Sequelize.INTEGER
       },

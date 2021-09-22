@@ -1,5 +1,6 @@
-const { Settlement, Barn } = require('../../database');
+const { Settlement, Barn, Lot } = require('../../database');
 const { validationResult } = require("express-validator");
+const sequelize = require("sequelize");
 
 module.exports = {
 
@@ -15,7 +16,14 @@ module.exports = {
       response.message = "The settlement belongs to another user";
       response.status = 401;
     } else {
-      response.data = settlement.Barns;
+      response.data = await settlement.getBarns({
+            group: 'barn.id',
+            include: [{ model: Lot, attributes: [] }],
+            attributes: [
+                'id', 'settlement_id', 'name', 'type', 'created_at',
+                [sequelize.fn('count', sequelize.col('lots.id')) ,'lots_number']
+            ],
+        });
     }
 
     res.status(response.status).json(response);
@@ -35,7 +43,12 @@ module.exports = {
   },
 
   async show(req, res) {
-    const barn = await Barn.findOne({where: {id: req.params.id}});
+    const barn = await Barn.findOne({where: {id: req.params.id},
+        include: [{ model: Lot, attributes: [] }],
+        attributes: [
+          'id', 'settlement_id', 'name', 'type', 'created_at',
+          [sequelize.fn('count', sequelize.col('lots.id')) ,'lots_number']
+        ],});
     const response = {status: 200, data: null}
 
     if (!barn) {

@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     settlement_id: DataTypes.STRING,
     name: DataTypes.STRING,
     type: DataTypes.STRING,
-    lots_number: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Barn',
