@@ -5,7 +5,7 @@ const BarnRequest = require("../app/requests/BarnRequest");
 const BarnController = require('../app/controllers/BarnController');
 
 router.use(middlewares.userIdChecker);
-router.use(middlewares.settlementsIdChecker);
+router.use(middlewares.settlementIdChecker);
 
 router.get('/', BarnController.index);
 router.post('/', ...BarnRequest.store, BarnController.store);

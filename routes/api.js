@@ -1,9 +1,5 @@
 const router = require('express').Router();
 
-// Controllers
-
-const LotController = require('../app/controllers/LotController');
-
 // Settlements
 router.use('/settlements', require('./settlements'));
 
@@ -11,6 +7,6 @@ router.use('/settlements', require('./settlements'));
 router.use('/barns', require('./barns'));
 
 // Lots
-router.get('/lots', LotController.index);
+router.use('/lots', require('./lots'));
 
 module.exports = router;

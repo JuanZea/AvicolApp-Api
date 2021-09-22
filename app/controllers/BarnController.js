@@ -36,7 +36,12 @@ module.exports = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) res.status(422).json({errors: errors});
 
-    response.data = await Barn.create({settlement_id: req.headers.settlement_id, ...req.body});
+    if (await Settlement.findByPk(req.headers.settlement_id))
+      response.data = await Barn.create({settlement_id: req.headers.settlement_id, ...req.body});
+    else {
+      response.status = 404;
+      response.message = "Settlement not found";
+    }
 
     res.status(201).json(response);
 
