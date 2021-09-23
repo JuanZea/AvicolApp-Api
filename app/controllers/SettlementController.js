@@ -21,31 +21,22 @@ module.exports = {
     },
 
     async first(req, res) {
+        const response = { status: 200 };
+        const settlement = await Settlement.findOne({
+            where: {user_id: req.headers.user_id},
+            attributes: [
+                'id', 'user_id', 'name', 'location', 'address', 'sea_level', 'created_at',
+                [sequelize.literal(`(SELECT COUNT(*) FROM barns AS barns WHERE barns.settlement_id = settlement.id)`), 'barns_number']
+            ],
+        });
 
-        // TODO Send barns_number for first
-        // const response = { status: 200 };
-        //
-        // const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id},
-        //     group: 'settlement.id',
-        //     include: [{ model: Barn, attributes: [] }],
-        //     attributes: [
-        //         'id', 'user_id', 'name', 'location', 'address', 'sea_level', 'created_at',
-        //         [sequelize.fn('count', sequelize.col('barns.id')) ,'barns_number']
-        //     ]
-        // });
-        //
-        //  if (!settlement) {
-        //     response.status = 404;
-        //     response.message = "There are no settlements";
-        // } else {
-        //     response.data = settlement;
-        // }
-        // res.status(response.status).json(response);
-
-        const settlement = await Settlement.findOne({where: {user_id: req.headers.user_id}});
-        const response = { status: settlement ? 200 : 404, data: settlement };
-        res.status(response.status).json(response);
-
+          if (!settlement) {
+             response.status = 404;
+             response.message = "There are no settlements";
+         } else {
+             response.data = settlement;
+         }
+         res.status(response.status).json(response);
     },
 
     async store(req, res) {

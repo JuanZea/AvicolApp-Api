@@ -43,4 +43,29 @@ module.exports = {
     res.status(response.status).json(response);
   },
 
+  async delete(req, res) {
+
+    const lot = await Lot.findOne({where: {id: req.params.id}, include: [{model: Barn}]});
+    const response = {status: 200, data: null}
+
+    if (!lot) {
+      response.status = 404;
+      response.message = "Lot not found";
+    } else {
+      const settlement = await lot.barn.getSettlement();
+      if (settlement.user_id.toString() !== req.headers.user_id) {
+        response.status = 401;
+        response.message = "The Lot belongs to a settlement of another user";
+      } else {
+        if (await lot.destroy()) response.message = "Lot deleted successfully";
+        else {
+          response.status = 400;
+          response.message = "Delete Lot failed";
+        }
+      }
+    }
+
+    res.status(response.status).json(response);
+
+  }
 }
