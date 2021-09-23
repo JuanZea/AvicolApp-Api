@@ -52,7 +52,8 @@ module.exports = {
       response.status = 404;
       response.message = "Lot not found";
     } else {
-      const settlement = await lot.barn.getSettlement();
+      const barn = await lot.getBarn();
+      const settlement = await barn.getSettlement();
       if (settlement.user_id.toString() !== req.headers.user_id) {
         response.status = 401;
         response.message = "The Lot belongs to a settlement of another user";
