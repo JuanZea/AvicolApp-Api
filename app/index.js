@@ -21,8 +21,8 @@ app.get('/', (req, res) => res.sendFile(path.resolve('./resources/views/index.ht
 app.use('/api', require('../routes/api'));
 
 
-app.listen(8000, () => {
-  console.log('Server on port 8000');
+app.listen(8001, () => {
+  console.log('Server on port 8001');
 
   connection.authenticate().then(() => {
     console.log('Database connection established.');
