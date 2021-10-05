@@ -1,5 +1,6 @@
-const { Lot, Barn } = require('../../database');
+const { Lot, Barn, Settlement} = require('../../database');
 const { validationResult } = require("express-validator");
+const sequelize = require("sequelize");
 
 module.exports = {
 
@@ -29,11 +30,15 @@ module.exports = {
     const response = { status: 201 };
     const errors = validationResult(req);
     if (!errors.isEmpty()) res.status(422).json({errors: errors});
-    if (await )
-    response.data = await Lot.create({barn_id: req.headers.barn_id, ...req.body});
+
+    if (await Barn.findByPk(req.headers.barn_id))
+      response.data = await Lot.create({barn_id: req.headers.barn_id, ...req.body});
+    else {
+      response.status = 404;
+      response.message = "Barn not found";
+    }
 
     res.status(201).json(response);
-
   },
 
   async update(req, res) {
@@ -60,4 +65,21 @@ module.exports = {
     res.status(response.status).json(response);
 
   },
+  async show(req, res) {
+    const lot = await Lot.findOne({where: {id: req.params.id},
+      attributes: [
+        'id', 'age', 'barn_id', 'created_at', 'vaccines']});
+    const response = {status: 200, data: null}
+
+    if (!lot) {
+      response.status = 404;
+      response.message = "Lot not found";
+    } else {
+        response.data = lot;
+    }
+
+    res.status(response.status).json(response);
+
+  },
+
 }

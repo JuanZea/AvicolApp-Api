@@ -9,7 +9,7 @@ router.use(middlewares.barnIdChecker);
 
 router.get('/', LotController.index);
 router.post('/', ...LotRequest.store, LotController.store);
-
+router.get('/:id', LotController.show)
 router.patch('/:id', ...LotRequest.store, LotController.update);
 
 module.exports = router;
