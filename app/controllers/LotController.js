@@ -68,5 +68,20 @@ module.exports = {
 
     res.status(response.status).json(response);
 
+  },
+
+  async show(req, res) {
+    const lot = await Lot.findOne({where: {id: req.params.id}});
+
+    const response = {status: 200, data: null}
+
+    if (!lot) {
+      response.status = 404;
+      response.message = "Lot not found";
+    } else {
+      response.data = lot;
+    }
+
+    res.status(response.status).json(response);
   }
 }

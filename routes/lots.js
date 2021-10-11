@@ -10,5 +10,6 @@ router.use(middlewares.barnIdChecker);
 router.get('/', LotController.index);
 router.post('/', ...LotRequest.store, LotController.store);
 router.delete('/:id', LotController.delete);
+router.get('/:id', LotController.show);
 
 module.exports = router;
