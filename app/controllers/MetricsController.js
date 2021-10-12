@@ -19,7 +19,9 @@ module.exports = {
             ]});
 
         let barns =  _.map(response.data.barns, 'id');
-        response.data.lots = await Lot.findAll({where: {barn_id: barns}});
+        response.data.lots = await Lot.findAll({where: {barn_id: barns},
+            include: [{ model: Barn, attributes: ['name'] }]
+        });
         res.status(response.status).json(response);
     },
 }
