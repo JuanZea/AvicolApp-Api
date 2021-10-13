@@ -5,13 +5,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = {
   database: process.env.DB_DATABASE || "development",
-  username: "admin",
-  password: "password",
-  dialect: "mysql",
+  username: process.env.DB_USERNAME || "root",
+  password: process.env.DB_PASSWORD || "",
+  dialect: process.env.DB_CONNECTION || "mysql",
   options: {
-    dialect:"mysql",
-    host: "avicolapp.cmu2tr1w5xst.us-east-1.rds.amazonaws.com",
-    port: "3306",
+    dialect: process.env.DB_CONNECTION || "mysql",
+    host: process.env.DB_HOST || "127.0.0.1",
+    port: process.env.DB_PORT || "3306",
     define: {
       underscored: true,
       timestamps: true,
